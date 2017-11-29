@@ -59,25 +59,6 @@ function projected_normal(point) #point type list (x,y)
     return [x,y] #we only need the projection onto 2-space
 end
 
-#the refractive angle between the refractive velocity and the refractive normal
-function refractive_angle(current_n,incident_angle,current_position)
-    return asin((current_n*sin(incident_angle))/refractive_index(current_position))
-end
-
-#desired magnitude of a velocity at a given position
-function magnitude_for_next_velocity(current_position)
-    return c / refractive_index(current_position)
-end#used in order to find the actual velocity vector at that position
-
-#=
-given you want to start with some current velocity, this function gives
-you the factor by which to multiply the current velocity, in order to get the
-desired refractive velocity
-=#
-function get_magnitude_factor(current_velocity,current_position)
-    return magnitude_for_next_velocity(current_position)/magnitude(current_velocity)
-end
-
 #generates a random initial velocity
 function generate_velocity()
     candidate = [rand(-c:c)-rand(),0]
@@ -109,10 +90,15 @@ while running
     #have to figure out how to update current_n
     incident_normal = projected_normal(current_position)
     incident_angle = choose_angle(incident_normal,current_velocity)
-    refract_angle = refractive_angle(current_n,incident_angle,current_position)
-
-
-
+    #the refractive angle between the refractive velocity and the refractive normal
+    refractive_angle = asin((current_n*sin(incident_angle))/refractive_index(current_position))
+    #=
+    given you want to start with some current velocity, this function gives
+    you the factor by which to multiply the current velocity, in order to get the
+    desired refractive velocity
+    =#
+    scaling_factor = c/(magnitude(current_velocity)*refractive_index(current_position))
+    next_velocity = scaling_factor*current_velocity#temporary... not the real next_velocity. still needs to be rotated
 
     current_velocity,current_position = next_velocity,next_position
     current_n = refractive_index(current_position)
