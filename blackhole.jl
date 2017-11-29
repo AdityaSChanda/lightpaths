@@ -1,10 +1,6 @@
 #=
 Title: Discrete Simulation of 2-Dimensional Light Paths in Continuous Media
-Author: Aditya S. Chanda
-Special thanks to Yuriy Slashchev for his great programming! I very much admire
-my good friend Yuriy Slashchev, Good person and all around great guy. This
-message was not written by Yuriy Slashchev at all. Some would say... it was
-written by the reverse.
+Author:
 =#
 
 #finds the magnitude of a vector in 2-space
